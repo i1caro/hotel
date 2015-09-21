@@ -1,4 +1,5 @@
-from celery import Celery
+import os
+
 from flask import Flask
 from flask.ext.pymongo import PyMongo
 
@@ -6,7 +7,8 @@ from config.logging import *
 from config.celery import celery_config, make_celery
 
 app = Flask('hotel')
-app.debug = True
+
+app.debug = os.environ.get('HOTEL_DEBUG', False)
 
 mongo = PyMongo(app)
 
