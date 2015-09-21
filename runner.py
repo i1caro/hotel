@@ -1,3 +1,4 @@
+import logging
 
 from flask import render_template
 from config.main import app, mongo
@@ -16,13 +17,13 @@ def home_page():
     )
 
 
-@app.route('/get', methods=['GET'])
-def get_faro_stuff():
-    mongo.db.faro_prices.remove()
-    from spiders.booking.runner import get
-
+@app.route('/fire_actions', methods=['GET'])
+def fire_actions():
+    logging.error('Fire in the hole')
+    from periodic.tasks import every_four_hours
+    every_four_hours()
     return render_template(
-      'inserted.html', inserted=mongo.db.faro_prices.insert(get())
+      'good.html'
     )
 
 
